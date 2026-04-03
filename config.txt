@@ -1,0 +1,9 @@
+# Took this from the subject
+# Maze configuration file
+
+WIDTH=20
+HEIGHT=15
+ENTRY=0,0
+EXIT=19,14
+OUTPUT_FILE=maze.txt
+PERFECT=True

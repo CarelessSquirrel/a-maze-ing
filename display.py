@@ -1,0 +1,1 @@
+# takes the 2D grid of cells and draws them visually in the terminal using ASCII characters

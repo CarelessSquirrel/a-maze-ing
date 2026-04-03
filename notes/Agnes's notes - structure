@@ -1,0 +1,30 @@
+I receive:
+---
+    -  a text file with hex digits (one character per cell, one row per line) — this encodes which walls each cell has
+
+    - An empty line
+    - Entry coordinates (x,y)
+    - Exit coordinates (x,y)
+    - The solution path as a string of directions (N, E, S, W)
+
+Order of processing:
+---
+    1. read the file
+        - make a function that reads this data line by line and stores it as a 2D list — a grid where each element is one hex character. That grid is what you'll loop through to draw the maze.
+
+        called - read_maze_file() ?
+            - opens the file, reads it line by line, and returns a 2D list of characters
+            def read_maze_file(filename):
+
+    2. decode each hex digit into wall information (which sides are open/closed)
+
+    3. render the maze visually cell by cell
+
+    4. show the entry and exit points
+
+    For the user:
+
+    - Show/hide the solution path on demand
+    - Let the user change wall colours
+    - Let the user re-generate a new maze
+    - Handle the interactive menu loop
