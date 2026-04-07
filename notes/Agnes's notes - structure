@@ -10,7 +10,8 @@ I receive:
 Order of processing:
 ---
     1. read the file
-        - make a function that reads this data line by line and stores it as a 2D list — a grid where each element is one hex character. That grid is what you'll loop through to draw the maze.
+        - make a function that reads this data line by line and stores it as a 2D list — 
+        a grid where each element is one hex character. That grid is what I'll loop through to draw the maze.
 
         called - read_maze_file() ?
             - opens the file, reads it line by line, and returns a 2D list of characters
