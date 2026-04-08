@@ -1,3 +1,5 @@
+from file_reader import decode_cell
+
 # takes the 2D grid of cells and draws them visually
 # in the terminal using ASCII characters
 
@@ -9,7 +11,7 @@ def create_grid(maze: list, width: int, height: int) -> None:
     # for each row in maze
         # draw the top line 
             # for each cell in a row:
-                # check if north wall exists & draw █████ or spaces if no wall
+                # check if north wall exists & draw cell or spaces if no wall
         # draw the midle line:
             # for each cell in row:
                 # check if wall exists & draw █
@@ -17,4 +19,18 @@ def create_grid(maze: list, width: int, height: int) -> None:
                 # check if east wall exists & draw █
     # after all the ows:
         # draw the final bottom line for the last row
-    pass
+    for row in maze:
+        for cell in row:
+            current_cell = decode_cell(cell)
+            if current_cell["north"] is True:
+                print("████", end=' ')
+            else:
+                print("    ", end=' ')
+        print()
+        for cell in row:
+            current_cell = decode_cell(cell)
+            left = "█" if current_cell["west"] else " "
+            right = "█" if current_cell["east"] else " "
+            print(f"{left}   {right}", end=' ')
+        print()
+        print('\n')
