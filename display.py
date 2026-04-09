@@ -3,7 +3,14 @@ from file_reader import decode_cell
 # takes the 2D grid of cells and draws them visually
 # in the terminal using ASCII characters
 
-def create_grid(maze: list, width: int, height: int) -> None:
+
+def create_grid(maze: list,
+                width: int,
+                height: int,
+                entry: tuple,
+                exit: tuple,
+                path: list) -> None:
+
     """
     Draw the grid with our given maze data using block symbol
     """
@@ -46,26 +53,26 @@ def create_grid(maze: list, width: int, height: int) -> None:
 
     # V2
     # _____________________________________
-    prev_row = None
-    for row in maze:
+    for row_idx, row in enumerate(maze):
         for i, cell in enumerate(row):
             current_cell = decode_cell(cell)
             if current_cell["north"] is True:
                 print("████", end='')
             else:
-                if prev_row is not None:
-                    above_cell = decode_cell(prev_row[i])
-                    corner = "█" if above_cell["south"] or current_cell["west"] else " "
-                else:
-                    corner = " "
-                print(f"{corner}   ", end='')
+                print("█   ", end='')
         print("█")
-        for cell in row:
+        for col_idx, cell in enumerate(row):
             current_cell = decode_cell(cell)
             left = "█" if current_cell["west"] else " "
-            print(f"{left}   ", end='')
+            if (col_idx, row_idx) == entry:
+                print(f"{left} E ", end='')
+            elif (col_idx, row_idx) == exit:
+                print(f"{left} X ", end='')
+            elif path and (col_idx, row_idx) in path:
+                print(f"{left} * ", end='')
+            else:
+                print(f"{left}   ", end='')
         print("█")
-        prev_row = row
     print("█" * (width * 4 + 1))
 
     # V3
@@ -88,3 +95,6 @@ def create_grid(maze: list, width: int, height: int) -> None:
     #                 right = " "
     #             print(f"{left}  {right}", end='')
     #     print()
+
+    def mark_entry_and_exit(maze: list, entry, ext) -> None:
+        pass
