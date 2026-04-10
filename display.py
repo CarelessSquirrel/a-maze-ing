@@ -2,12 +2,26 @@ from file_reader import decode_cell
 
 # takes the 2D grid of cells and draws them visually
 # in the terminal using ASCII characters
+# adds color to separate parts (like 42, entry & exit, path)
 
 RESET = '\033[0m'
 CYAN = '\033[96m'
 MAGENTA = '\033[95m'
 RED = '\033[91m'
 YELLOW = '\033[93m'
+
+
+def paint_maze(col_idx: int, row_idx: int, entry: tuple, exit: tuple, path: list, is_42: bool) -> str:
+    """Return the matching color code for a cell."""
+    if (col_idx, row_idx) == entry:
+        return MAGENTA
+    elif (col_idx, row_idx) == exit:
+        return RED
+    elif path and (col_idx, row_idx) in path:
+        return CYAN
+    elif is_42:
+        return YELLOW
+    return RESET
 
 
 def create_grid(maze: list,
@@ -60,18 +74,26 @@ def create_grid(maze: list,
     # V2
     # _____________________________________
     for row_idx, row in enumerate(maze):
+        for cell in row:
+            current_cell = decode_cell(cell)
+            if current_cell["north"]:
+                print("████", end='')
+            else:
+                print("█   ", end='')
+        print("█")
         for col_idx, cell in enumerate(row):
             current_cell = decode_cell(cell)
             left = "█" if current_cell["west"] else " "
             is_42 = all(current_cell[w] for w in ["north", "east", "south", "west"])
+            color = paint_maze(col_idx, row_idx, entry, exit, path, is_42)
             if (col_idx, row_idx) == entry:
-                print(f"{MAGENTA}{left} E {RESET}", end='')
+                print(f"{color}{left} E {RESET}", end='')
             elif (col_idx, row_idx) == exit:
-                print(f"{RED}{left} X {RESET}", end='')
+                print(f"{color}{left} X {RESET}", end='')
             elif path and (col_idx, row_idx) in path:
-                print(f"{CYAN}{left} * {RESET}", end='')
+                print(f"{color}{left} * {RESET}", end='')
             elif is_42:
-                print(f"{YELLOW}{left}███{RESET}", end='')
+                print(f"{color}{left}███{RESET}", end='')
             else:
                 print(f"{left}   ", end='')
         print("█")
