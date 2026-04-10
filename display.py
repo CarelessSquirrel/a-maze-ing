@@ -3,6 +3,12 @@ from file_reader import decode_cell
 # takes the 2D grid of cells and draws them visually
 # in the terminal using ASCII characters
 
+RESET = '\033[0m'
+CYAN = '\033[96m'
+MAGENTA = '\033[95m'
+RED = '\033[91m'
+YELLOW = '\033[93m'
+
 
 def create_grid(maze: list,
                 width: int,
@@ -54,22 +60,18 @@ def create_grid(maze: list,
     # V2
     # _____________________________________
     for row_idx, row in enumerate(maze):
-        for i, cell in enumerate(row):
-            current_cell = decode_cell(cell)
-            if current_cell["north"] is True:
-                print("████", end='')
-            else:
-                print("█   ", end='')
-        print("█")
         for col_idx, cell in enumerate(row):
             current_cell = decode_cell(cell)
             left = "█" if current_cell["west"] else " "
+            is_42 = all(current_cell[w] for w in ["north", "east", "south", "west"])
             if (col_idx, row_idx) == entry:
-                print(f"{left} E ", end='')
+                print(f"{MAGENTA}{left} E {RESET}", end='')
             elif (col_idx, row_idx) == exit:
-                print(f"{left} X ", end='')
+                print(f"{RED}{left} X {RESET}", end='')
             elif path and (col_idx, row_idx) in path:
-                print(f"{left} * ", end='')
+                print(f"{CYAN}{left} * {RESET}", end='')
+            elif is_42:
+                print(f"{YELLOW}{left}███{RESET}", end='')
             else:
                 print(f"{left}   ", end='')
         print("█")
