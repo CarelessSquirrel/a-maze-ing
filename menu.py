@@ -10,7 +10,7 @@ from mazegen import encode_maze, generate_maze, solve_maze, write_maze_file
 # Named wall-colour options shown in the colour picker submenu
 _WALL_COLORS: List[Tuple[str, str]] = [
     ('Default (white)', ''),
-    ('Blue',            '\033[34m'),
+    ('Blue',            '\033[94m'),
     ('Green',           '\033[32m'),
     ('Red',             '\033[91m'),
     ('Cyan',            '\033[96m'),
