@@ -76,7 +76,6 @@ def process_directions(path: list, entry: tuple) -> list:
     """
     current_pos = entry
     coordinates = []
-    print(path)
     for direction in path:
         x, y = current_pos
         if direction == 'S':

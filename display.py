@@ -30,9 +30,12 @@ def paint_maze(col_idx: int, row_idx: int, entry: tuple,
 
 
 def create_grid(maze: list, width: int, height: int,
-                entry: tuple, exit: tuple, path: list = None) -> None:
+                entry: tuple, exit: tuple, path: list = None,
+                wall_color: str = '') -> None:
     """Draw the grid using intersection-based approach."""
-    W = f"{WALL}█{RESET}"
+    wc = wall_color if wall_color else WALL
+    W = f"{wc}█{RESET}"
+    W3 = f"{wc}███{RESET}"
     S = " "
 
     # decode all cells once
@@ -61,7 +64,7 @@ def create_grid(maze: list, width: int, height: int,
         # always draw corner on borders
         if row_idx == 0 or row_idx == height or col_idx == 0 or col_idx == width:
             return W
-        
+
         top = cells[row_idx - 1][col_idx - 1]["east"] if col_idx > 0 and row_idx > 0 else False
         bottom = cells[row_idx][col_idx - 1]["east"] if col_idx > 0 and row_idx < height else False
         left = cells[row_idx - 1][col_idx - 1]["south"] if col_idx > 0 and row_idx > 0 else False
@@ -77,7 +80,7 @@ def create_grid(maze: list, width: int, height: int,
         for col_idx in range(width):
             top_line += corner(row_idx, col_idx)
             if h_wall(row_idx, col_idx):
-                top_line += f"{WALL}███{RESET}"
+                top_line += W3
             else:
                 top_line += S + S + S
         top_line += corner(row_idx, width)
@@ -107,9 +110,10 @@ def create_grid(maze: list, width: int, height: int,
     bottom = ""
     for col_idx in range(width):
         bottom += corner(height, col_idx)
-        bottom += f"{WALL}███{RESET}"
+        bottom += W3
     bottom += corner(height, width)
     print(bottom)
+
 
 # V0
 # _____________________________________
@@ -229,53 +233,3 @@ def create_grid(maze: list, width: int, height: int,
 #                 print(f"{left}   ", end='')
 #         print(f"{WALL}█{RESET}")
 #     print(f"{WALL}" + "█" * (width * 4 + 1) + f"{RESET}")
-
-# ________________________________________
-
-# RESET = '\033[0m'
-# CYAN = '\033[96m'
-# MAGENTA = '\033[95m'
-# RED = '\033[91m'
-# YELLOW = '\033[93m'
-
-
-# def paint_maze(col_idx: int, row_idx: int, entry: tuple, exit: tuple, path: list, is_42: bool) -> str:
-#     """Return the matching color code for a cell."""
-#     if (col_idx, row_idx) == entry:
-#         return MAGENTA
-#     elif (col_idx, row_idx) == exit:
-#         return RED
-#     elif path and (col_idx, row_idx) in path:
-#         return CYAN
-#     elif is_42:
-#         return YELLOW
-#     return RESET
-
-    # V2
-    # _____________________________________
-    # for row_idx, row in enumerate(maze):
-    #     for cell in row:
-    #         current_cell = decode_cell(cell)
-    #         if current_cell["north"]:
-    #             print("████", end='')
-    #         else:
-    #             print("█   ", end='')
-    #     print("█")
-    #     for col_idx, cell in enumerate(row):
-    #         current_cell = decode_cell(cell)
-    #         left = "█" if current_cell["west"] else " "
-    #         is_42 = all(current_cell[w] for w in ["north", "east", "south", "west"])
-    #         color = paint_maze(col_idx, row_idx, entry, exit, path, is_42)
-    #         if (col_idx, row_idx) == entry:
-    #             print(f"{color}{left} E {RESET}", end='')
-    #         elif (col_idx, row_idx) == exit:
-    #             print(f"{color}{left} X {RESET}", end='')
-    #         elif path and (col_idx, row_idx) in path:
-    #             print(f"{color}{left} * {RESET}", end='')
-    #         elif is_42:
-    #             print(f"{color}{left}███{RESET}", end='')
-    #         else:
-    #             print(f"{left}   ", end='')
-    #     print("█")
-    # print("█" * (width * 4 + 1))
-

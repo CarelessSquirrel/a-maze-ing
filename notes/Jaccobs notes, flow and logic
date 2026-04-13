@@ -1,0 +1,590 @@
+=============================================================
+  A-MAZE-ING — Full Flow & Logic Notes (Jacob's Part)
+=============================================================
+
+These notes cover every file, every function, and the logic
+connecting them.  Start here for the big picture, then ask
+in-depth questions about specific lines or concepts later.
+
+
+-------------------------------------------------------------
+  1. THE BIG PICTURE — What happens when you run the program
+-------------------------------------------------------------
+
+When you run:
+    python3 a_maze_ing.py
+
+The program goes through 5 stages in order:
+
+    STAGE 1 — Read the config file (config.txt)
+        Parse WIDTH, HEIGHT, ENTRY, EXIT, OUTPUT_FILE, PERFECT.
+        If anything is wrong, print an error and stop cleanly.
+
+    STAGE 2 — Generate the maze
+        Build a 2D grid where every cell starts as a fully
+        walled box.  Then carve passages between cells using
+        the DFS algorithm until every reachable cell is
+        connected.  The "42" pattern cells are placed BEFORE
+        this step so the algorithm never touches them.
+
+    STAGE 3 — Solve the maze
+        Run BFS (Breadth-First Search) from ENTRY to EXIT
+        to find the shortest possible path through the maze.
+
+    STAGE 4 — Write the output file
+        Save the maze + entry + exit + path to maze.txt
+        (or whatever OUTPUT_FILE says) in the format Agnes's
+        code knows how to read.
+
+    STAGE 5 — Display + interactive menu
+        Convert the maze into the hex-string format Agnes's
+        display expects, draw it on screen, then enter a loop
+        where the user can regenerate, toggle the path, change
+        colours, or quit.
+
+The whole journey of data:
+
+    config.txt
+        |
+        v
+    config_parser.py  ->  config dict (WIDTH, HEIGHT, etc.)
+        |
+        v
+    mazegen/generator.py  ->  cells  (2D grid of integers)
+        |
+        v
+    mazegen/solver.py     ->  path   (list of directions)
+        |
+        v
+    mazegen/writer.py     ->  maze.txt  (the output file)
+        |
+        v
+    mazegen/writer.py (encode_maze)  ->  hex_grid (for display)
+        |
+        v
+    display.py (Agnes)    ->  terminal output
+        |
+        v
+    menu.py               ->  user interaction loop
+
+
+-------------------------------------------------------------
+  2. THE CORE DATA STRUCTURE — How a cell is stored
+-------------------------------------------------------------
+
+Every cell in the maze is stored as a single integer between
+0 and 15.  That integer uses 4 bits, one per wall direction:
+
+    Bit 0  (value 1)  =  NORTH wall
+    Bit 1  (value 2)  =  EAST wall
+    Bit 2  (value 4)  =  SOUTH wall
+    Bit 3  (value 8)  =  WEST wall
+
+    If the bit is 1, the wall EXISTS (is closed / solid).
+    If the bit is 0, the wall is ABSENT (a passage exists).
+
+Examples:
+    0xF  =  15  =  1111 in binary  =  all 4 walls closed
+    0x0  =   0  =  0000 in binary  =  no walls (fully open)
+    0x5  =   5  =  0101 in binary  =  north + south walls only
+
+The entire maze is a 2D list of these integers:
+    cells[row][col]  ->  one integer for that cell
+
+This is YOUR internal format.  Agnes never sees integers —
+she gets single hex characters (0-F) which she converts back
+using decode_cell() in file_reader.py.  The conversion is:
+    integer 15  ->  hex character 'F'
+    integer  5  ->  hex character '5'
+    integer  0  ->  hex character '0'
+
+
+-------------------------------------------------------------
+  3. FILE BY FILE BREAKDOWN
+-------------------------------------------------------------
+
+The files you own / wrote:
+
+    a_maze_ing.py       — the entry point (the manager)
+    config_parser.py    — reads and validates config.txt
+    mazegen/
+        __init__.py     — package exports (the public face)
+        generator.py    — builds the maze (DFS algorithm)
+        solver.py       — finds the path (BFS algorithm)
+        writer.py       — saves the maze to a file
+    setup.py            — lets the mazegen package be installed
+
+
+Files Agnes owns (you touched two of them slightly):
+
+    file_reader.py      — reads the output file back in
+    display.py          — draws the maze in the terminal
+    menu.py             — the interactive user menu
+                          (you wrote this, but it calls Agnes's code)
+
+
+-------------------------------------------------------------
+  4. a_maze_ing.py — THE ENTRY POINT
+-------------------------------------------------------------
+
+This file is the "manager".  It does not do any heavy work
+itself — it calls the other modules in the right order.
+
+    main()
+    ------
+    The function Python runs first.
+
+    Step 1: Checks if you passed a filename on the command line
+            (e.g. python3 a_maze_ing.py myconfig.txt).
+            If not, it defaults to 'config.txt'.
+
+    Step 2: Calls parse_config() from config_parser.py.
+            If that raises an error (bad config file), it
+            catches it, prints a clean message, and exits.
+            The program never crashes with a raw traceback.
+
+    Step 3: Calls _new_maze() to generate and save the maze.
+
+    Step 4: Calls run_menu() from menu.py to start the
+            interactive loop.
+
+    _new_maze(config)
+    -----------------
+    A helper that groups the "generate → solve → write" steps.
+
+    Step 1: Calls generate_maze() with the config values.
+            Gets back: cells (the maze grid) and has_42 (bool).
+
+    Step 2: Calls solve_maze() on those cells.
+            Gets back: path (list of direction characters).
+
+    Step 3: If path is None (no solution found, shouldn't
+            happen with a valid maze), prints a warning and
+            uses an empty list instead.
+
+    Step 4: Calls write_maze_file() to save everything to disk.
+
+    Step 5: Returns cells and has_42 to main().
+
+
+-------------------------------------------------------------
+  5. config_parser.py — READING THE CONFIG FILE
+-------------------------------------------------------------
+
+    parse_config(filename)
+    ----------------------
+    Opens the file line by line.  For each line:
+        - Skip blank lines and lines starting with '#'.
+        - If there is no '=' in the line, raise a ValueError
+          (the evaluator will test this exact case).
+        - Split on '=' to get key and value.
+        - Store key (uppercased) and value in a dict called raw.
+
+    After reading all lines, it validates in 6 steps:
+
+    Step 1 — Check all 6 required keys are present.
+              (WIDTH, HEIGHT, ENTRY, EXIT, OUTPUT_FILE, PERFECT)
+              If any are missing, raise ValueError.
+
+    Step 2 — WIDTH and HEIGHT must convert to int and be > 0.
+              'abc' or '-5' both fail with a clear message.
+
+    Step 3 — ENTRY and EXIT must be in "x,y" format.
+              Must split into exactly 2 parts, both must be ints.
+              '1' alone fails.  'a,b' fails.  '1,2' passes.
+
+    Step 4 — PERFECT must be a boolean.
+              Accepts: true/false, 1/0, yes/no (case-insensitive).
+              'maybe' fails.
+
+    Step 5 — OUTPUT_FILE is accepted as-is (just a string).
+
+    Step 6 — Cross-check: ENTRY and EXIT coordinates must
+              actually be inside the maze (0 <= x < WIDTH, etc.).
+              A 20x15 maze with ENTRY=99,99 fails here.
+
+    Returns a clean Python dict with properly typed values:
+        {
+            'WIDTH':       20,          <- int
+            'HEIGHT':      15,          <- int
+            'ENTRY':       (0, 0),      <- tuple of ints
+            'EXIT':        (19, 14),    <- tuple of ints
+            'OUTPUT_FILE': 'maze.txt',  <- string
+            'PERFECT':     True,        <- bool
+        }
+
+
+-------------------------------------------------------------
+  6. mazegen/generator.py — BUILDING THE MAZE
+-------------------------------------------------------------
+
+This is the algorithmic heart of your work.
+
+--- Constants at the top ---
+
+    NORTH = 1, EAST = 2, SOUTH = 4, WEST = 8
+        These are bit mask constants.  Used throughout the file
+        to set and clear individual wall bits on cells.
+
+    _MOVES
+        A list of 4 tuples, one per direction:
+        (dx, dy, wall_on_current_cell, opposite_wall_on_neighbour)
+        Example: moving NORTH means dx=0, dy=-1 (y decreases),
+        and we need to remove the NORTH wall from the current cell
+        AND the SOUTH wall from the cell above.
+
+    _PATTERN_42
+        A 5-row by 7-column grid of 1s and 0s.
+        1 means "place a fully-walled cell here" (part of '42').
+        0 means "leave this cell alone".
+        The layout spells out the digit "4" (3 cols), a gap
+        (1 col), and the digit "2" (3 cols).
+
+
+--- generate_maze(width, height, entry, exit_, perfect, seed) ---
+
+    The main function.  Returns (cells, has_42).
+
+    Step 1: If a seed is provided, call random.seed(seed).
+            This makes the random choices reproducible — the
+            same seed always produces the same maze.
+
+    Step 2: Create the starting cells grid.
+            Every cell starts as 0xF (all 4 walls closed).
+            Size: height rows, width columns.
+
+    Step 3: Call _place_42() to stamp the pattern into the grid
+            and get back the set of pattern cell coordinates.
+            If the maze is too small, print a message and skip.
+
+    Step 4: Create a visited grid (same size, all False).
+            Mark all pattern cells as already visited so the
+            DFS algorithm will never try to enter them.
+            Mark the entry cell as visited too, and push it
+            onto the stack to start the DFS from there.
+
+    Step 5: Run the DFS loop (see below).
+
+    Step 6: If perfect=False, call _add_loops() to carve a
+            few extra passages, creating a maze with cycles.
+
+    Step 7: Return cells and has_42.
+
+
+--- The DFS Algorithm (inside generate_maze) ---
+
+    DFS stands for Depth-First Search.  Here it's used as a
+    maze carver, not a searcher.  The idea:
+
+    Think of the maze as a grid of rooms, all starting with
+    4 solid walls.  You want to knock down walls between rooms
+    until every room is reachable, but without creating loops
+    (for a perfect maze).
+
+    The algorithm uses a stack — a list you push to and pop from.
+
+    1. Push the entry cell onto the stack.
+    2. WHILE the stack is not empty:
+        a. Look at the cell on TOP of the stack (don't pop yet).
+        b. Find all its UNVISITED neighbours (up/down/left/right)
+           that are within bounds and not pattern cells.
+        c. If there ARE unvisited neighbours:
+            - Pick one at random.
+            - Carve through the wall between current cell and
+              that neighbour (clear the wall bit on both sides).
+            - Mark the neighbour as visited.
+            - Push the neighbour onto the stack.
+              (We go DEEPER — like walking into a new room.)
+        d. If there are NO unvisited neighbours:
+            - Pop the current cell off the stack.
+              (Dead end — we BACKTRACK to the previous cell.)
+    3. When the stack is empty, every reachable cell has been
+       visited and the maze is complete.
+
+    Why this guarantees no 3x3 open zones in a perfect maze:
+        The result is a spanning tree — exactly one path between
+        any two cells, no loops.  A fully open 3x3 zone would
+        require 4 extra connections (cycles) that a tree cannot
+        have.  So it's mathematically impossible.
+
+
+--- _place_42(cells, width, height, pattern_cells) ---
+
+    Calculates the top-left corner (offset_x, offset_y) to
+    centre the 7x5 pattern in the maze.
+
+    Loops through every position in the pattern grid.
+    Wherever _PATTERN_42 has a 1, it sets that cell in the
+    real maze to 0xF (all walls) and records the coordinate
+    in the pattern_cells set.
+
+    Returns False if the maze is too small to fit the pattern
+    with at least 2 cells of padding on each side.
+
+
+--- _is_open_zone(cells, gx, gy) ---
+
+    Checks a single 3x3 sub-grid starting at column gx, row gy.
+
+    Loops through all 9 cells in that sub-grid.
+    For every cell that is NOT on the right edge of the zone,
+    checks if its EAST wall exists.
+    For every cell that is NOT on the bottom edge of the zone,
+    checks if its SOUTH wall exists.
+
+    If ANY interior wall is found, the zone is NOT fully open
+    → return False.
+    If NO interior walls are found → return True (open zone).
+
+
+--- has_open_zone(cells, width, height) ---
+
+    Scans every possible 3x3 position in the whole maze and
+    calls _is_open_zone() on each.  Returns True as soon as
+    it finds one.  Used for verification / debugging.
+
+
+--- _add_loops(cells, width, height, pattern_cells) ---
+
+    Only called when PERFECT=False.
+
+    Step 1: Build a list of every interior wall that currently
+            exists between two non-pattern cells.
+            An "interior wall" means an EAST or SOUTH wall
+            (we only need one direction per wall to avoid
+            duplicates — the other cell shares the same wall).
+
+    Step 2: Shuffle the list randomly.
+
+    Step 3: Calculate how many walls to remove (5% of total).
+
+    Step 4: For each candidate wall:
+            - Tentatively remove it (clear the bit on both cells).
+            - Check all 3x3 sub-grids that overlap the two cells
+              involved, using _is_open_zone().
+            - If removing it WOULD create an open zone: put the
+              wall back (revert).
+            - If it does NOT create an open zone: keep it removed
+              and count it.
+            - Stop when we've added enough loops.
+
+
+-------------------------------------------------------------
+  7. mazegen/solver.py — FINDING THE SHORTEST PATH
+-------------------------------------------------------------
+
+    solve_maze(cells, entry, exit_, width, height)
+    -----------------------------------------------
+    Uses BFS (Breadth-First Search) to find the shortest path.
+
+    BFS explores cells level by level outward from the start,
+    like ripples in a pond.  The first time it reaches the exit,
+    it has found the shortest route — because it always explores
+    all cells 1 step away before any cells 2 steps away, etc.
+
+    Data structures:
+        queue   — a deque (double-ended queue, efficient for BFS).
+                  Each item is ((x, y), path_so_far).
+                  Starts with just the entry cell and empty path.
+        visited — a set of (x, y) tuples already explored.
+                  Prevents visiting the same cell twice.
+
+    The loop:
+        1. Take the next cell off the front of the queue.
+        2. If it's the exit, return the path accumulated so far.
+        3. For each of the 4 directions (N/E/S/W):
+            a. Check if the wall in that direction EXISTS on the
+               current cell.  If yes, skip (can't go that way).
+            b. Calculate the neighbour coordinate.
+            c. If the neighbour is in bounds and not visited:
+                - Add it to visited.
+                - Add it to the queue with the path extended
+                  by this direction character.
+
+    Returns a list like ['E','S','S','E','N','E',...].
+    Returns None if no path exists (should never happen in a
+    valid connected maze).
+
+
+-------------------------------------------------------------
+  8. mazegen/writer.py — SAVING THE MAZE TO A FILE
+-------------------------------------------------------------
+
+    encode_maze(cells)
+    ------------------
+    Converts the 2D integer grid into a list of strings.
+    Each integer (0–15) is formatted as an uppercase hex
+    character (0–F).  One string per row.
+
+    Example row: [15, 9, 5, 2, ...] → 'F952...'
+
+    This is the format Agnes's read_maze_file() expects.
+
+    write_maze_file(filename, cells, entry, exit_, path)
+    ----------------------------------------------------
+    Calls encode_maze() first to get the hex strings.
+    Then writes the output file in this exact format:
+
+        Line 1..HEIGHT:   one hex string per row
+        Empty line:       separator
+        Line HEIGHT+2:    entry as "x,y"
+        Line HEIGHT+3:    exit as "x,y"
+        Line HEIGHT+4:    path as one long string "ESNW..."
+
+    This is the format the whole project agreed on so that
+    Agnes's reading code and the evaluator's validation script
+    both work correctly.
+
+
+-------------------------------------------------------------
+  9. mazegen/__init__.py — THE PACKAGE FACE
+-------------------------------------------------------------
+
+    This file makes the mazegen/ folder a proper Python package.
+    It imports the 4 public functions from the sub-files and
+    lists them in __all__, so any other file in the project can
+    just write:
+
+        from mazegen import generate_maze, solve_maze, ...
+
+    Without needing to know which sub-file each lives in.
+
+
+-------------------------------------------------------------
+  10. setup.py — THE INSTALLABLE PACKAGE
+-------------------------------------------------------------
+
+    Defines the package metadata so Python's packaging tools
+    can build a distributable file from the mazegen/ folder.
+
+    Running:
+        python setup.py sdist
+
+    ...creates a mazegen-1.0.0.tar.gz file.  The evaluator
+    will install this in a fresh virtual environment to verify
+    the package works independently of the project folder.
+
+    Running in a virtualenv:
+        pip install mazegen-1.0.0.tar.gz
+
+    ...makes "from mazegen import generate_maze" work anywhere.
+
+
+-------------------------------------------------------------
+  11. menu.py — THE INTERACTIVE LOOP
+-------------------------------------------------------------
+
+    This file calls Agnes's display code and your generation
+    code together to power the interactive session.
+
+    run_menu(initial_cells, config)
+    --------------------------------
+    The outer loop.  Runs forever until the user picks "Quit".
+
+    State it tracks:
+        cells       — the current maze (can be replaced on
+                      regenerate).
+        show_path   — boolean toggle for showing the solution.
+        wall_color  — ANSI escape code string for wall colour
+                      (empty string = default terminal colour).
+
+    Each iteration:
+        1. Clear the screen.
+        2. Call _render() to draw the maze.
+        3. Call _print_menu() to show the options.
+        4. Wait for user input.
+        5. Act on it:
+            '1' → call _regenerate() to get new cells
+            '2' → flip show_path True/False
+            '3' → call _pick_color() to get a new wall_color
+            '4' → break out of the loop (quit)
+            anything else → do nothing, just redraw
+
+    _regenerate(config)
+    -------------------
+    Calls generate_maze() and solve_maze() with the same config
+    values, writes the new maze to the output file, and returns
+    the new cells grid.  The menu loop replaces its cells
+    variable with the returned value.
+
+    _render(cells, config, show_path, wall_color)
+    ----------------------------------------------
+    Step 1: Call encode_maze() to convert cells (integers) into
+            the hex-string format Agnes's display expects.
+    Step 2: If show_path is True, call solve_maze() again on the
+            current cells to get the path directions, then call
+            process_directions() (Agnes's function) to convert
+            those directions into a list of (x,y) coordinates.
+            If show_path is False, coord_path stays empty.
+    Step 3: Call Agnes's create_grid() with the hex grid,
+            dimensions, entry, exit, path coordinates, and the
+            chosen wall colour.
+
+    _print_menu(show_path, wall_color)
+    -----------------------------------
+    Prints the menu box to the terminal.
+    Shows the current state of the path toggle (ON/OFF) and the
+    currently selected wall colour name inline in the menu.
+
+    _pick_color()
+    -------------
+    Clears the screen and shows a numbered list of colour choices.
+    Reads the user's number, looks up the matching ANSI escape
+    code from the _WALL_COLORS list, and returns it.
+    Falls back to the default (empty string) on bad input.
+
+    _clear()
+    --------
+    Clears the terminal.  Uses the right command for the OS
+    ('clear' on Linux/Mac, 'cls' on Windows).
+
+
+-------------------------------------------------------------
+  12. HOW THE TWO HALVES CONNECT
+-------------------------------------------------------------
+
+Your code and Agnes's code meet at two points:
+
+    POINT A — The output file (maze.txt)
+        You write it in writer.py.
+        Agnes reads it in file_reader.py.
+        The agreed format (hex grid + blank line + entry +
+        exit + path) is the contract between the two halves.
+
+    POINT B — The encode_maze() function
+        Instead of going through the file, menu.py calls
+        encode_maze() to convert your integer grid directly
+        into the hex-string format Agnes's create_grid() needs.
+        This avoids a pointless file round-trip during display.
+
+    Agnes's functions you call from menu.py:
+        encode_maze()         → from your writer.py
+        create_grid()         → Agnes's renderer
+        process_directions()  → Agnes's path coordinate builder
+
+
+-------------------------------------------------------------
+  13. WHAT IS STILL MISSING (your part)
+-------------------------------------------------------------
+
+    - Seed exposed to the user
+        generate_maze() already accepts a seed parameter, but
+        there is no way for the user to set it via config or
+        menu yet.  Needed for the "reproducible maze" requirement.
+
+    - Generator bounds-checking
+        The config parser validates entry/exit, but the generator
+        itself does not guard against bad values.  The eval sheet
+        says the generator module should handle this on its own.
+
+    - Build + virtualenv test of the package
+        setup.py exists but mazegen-1.0.0.tar.gz has not been
+        built or tested in a clean virtualenv yet.
+        Command: python setup.py sdist
+
+    - README.md
+        All required sections still need to be written.
+
+    - flake8 / mypy verification
+        The code has not been run through the linters yet.
+        The eval sheet says a failure here is an automatic 0.
