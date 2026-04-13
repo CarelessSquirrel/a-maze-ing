@@ -42,7 +42,7 @@ def read_maze_file(filename: str) -> tuple:
 # A cell is one "pixel" of the maze that represents where a wall will be
 def decode_cell(cell: str) -> dict:
     """
-    Take the 2D grid created in read_maze_file() and turn 
+    Take the 2D grid created in read_maze_file() and turn
     the hex charcters into walls
     """
     # take the first character from the first maze line
