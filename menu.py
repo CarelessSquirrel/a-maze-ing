@@ -7,6 +7,22 @@
 #   Quit
 
 
+def re_generate_maze(maze: list,
+              width: int,
+              height: int,
+              entry: tuple,
+              exit: tuple,
+              path: list) -> list:
+    pass
+
+
+def show_hide_path() -> None:
+    pass
+
+
+def change_colors() -> None:
+    pass
+
 
 def show_menu(maze: list,
               width: int,
