@@ -1,0 +1,15 @@
+changes:
+
+_print_menu no longer takes show_path as a parameter
+
+Removed the commented-out path_state line
+
+Option 2 now just says "Toggle solution path" with no [ON]/[OFF]
+
+Option 3 still shows the current colour name (e.g. [Blue ])
+
+The call in run_menu updated to match
+
+_print_menu also lost the wall_color parameter — it now takes no parameters at all, so option 3 no longer shows the current colour name either (the note is outdated on this point)
+
+a_maze_ing.py import changed — from from menu import run_menu to from jacobs_menu import run_menu, so the program now uses your menu instead of Agnes's

@@ -38,7 +38,7 @@ def run_menu(
     while True:
         _clear()
         _render(cells, config, show_path, wall_color)
-        _print_menu(show_path, wall_color)
+        _print_menu()
 
         choice = input('> ').strip()
 
@@ -117,17 +117,12 @@ def _render(
     )
 
 
-def _print_menu(show_path: bool, wall_color: str) -> None:
-    path_state = 'ON' if show_path else 'OFF'
-    color_name = next(
-        (name for name, code in _WALL_COLORS if code == wall_color),
-        'Custom',
-    )
+def _print_menu() -> None:
     print()
     print('┌─ A-Maze-ing ──────────────────────┐')
     print('│  1. Re-generate maze              │')
-    print(f'│  2. Toggle solution path  [{path_state:>3}]   │')
-    print(f'│  3. Change wall colour  [{color_name:<9}]│')
+    print('│  2. Toggle solution path          │')
+    print('│  3. Change wall colour            │')
     print('│  4. Quit                          │')
     print('└───────────────────────────────────┘')
 
