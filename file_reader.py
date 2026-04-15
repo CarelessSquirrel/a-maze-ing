@@ -10,9 +10,6 @@ def read_maze_file(filename: str) -> tuple:
 
     with open(filename, 'r') as file:
         lines = file.readlines()
-    # now we have a list called lines that contains everything:
-    # maze in hex chars, entry, exit, path
-    # defining a 2D list of lists to save as maze
     maze = []
     entry = []
     exit = []
@@ -24,13 +21,10 @@ def read_maze_file(filename: str) -> tuple:
         if line == '\n':
             break
 
-    # save the first line after empty line as tuple coordinates for entry
     coordinates_entry = lines[empty_line_index + 1].split(",")
     entry = tuple(int(x) for x in coordinates_entry)
-    # save the following line as coordinates for exit
     coordinates_exit = lines[empty_line_index + 2].split(",")
     exit = tuple(int(x) for x in coordinates_exit)
-    # save the following line as a list of the path
     path = list(lines[empty_line_index + 3].strip())
 
     return (maze, entry, exit, path)
@@ -42,21 +36,11 @@ def decode_cell(cell: str) -> dict:
     Take the 2D grid created in read_maze_file() and turn
     the hex charcters into walls
     """
-    # take the first character from the first maze line
-    # convert it from a hex to a regular int
     value = int(cell, 16)
-    # check each of the 4 bits of this int with a mask:
-    # LSB - least significant bit
-        # bit 0 (LSB)= north wall
-        # bit 1 = east wall
-        # bit 2 = south wall
-        # bit 3 = west wall
-    north = bool(value & 1)   # checks bit 0
-    east = bool(value & 2)    # checks bit 1
-    south = bool(value & 4)   # checks bit 2
-    west = bool(value & 8)    # checks bit 3
-    # return a dict something like:
-    # {"north": True, "east": False, "south": True, "west": False}
+    north = bool(value & 1)
+    east = bool(value & 2)
+    south = bool(value & 4)
+    west = bool(value & 8)
     cell_walls = {
         "north": north,
         "east": east,
