@@ -7,17 +7,19 @@ from file_reader import decode_cell
 # V0-1
 # _____________________________________
 
+# module-level constants (or global constants)
 RESET = '\033[0m'
 WALL = '\033[37m'
 CYAN = '\033[96m'
 MAGENTA = '\033[95m'
 RED = '\033[91m'
 YELLOW = '\033[93m'
+BLUE = '\033[94m'
 
 
 def paint_maze(col_idx: int, row_idx: int, entry: tuple,
                exit: tuple, path: list, is_42: bool) -> str:
-    """Return the appropriate color code for a cell."""
+    """Return the appropriate color code for a cell"""
     if (col_idx, row_idx) == entry:
         return MAGENTA
     elif (col_idx, row_idx) == exit:
@@ -25,7 +27,7 @@ def paint_maze(col_idx: int, row_idx: int, entry: tuple,
     elif path and (col_idx, row_idx) in path:
         return CYAN
     elif is_42:
-        return YELLOW
+        return BLUE
     return RESET
 
 
@@ -36,10 +38,13 @@ def create_grid(maze: list, width: int, height: int,
     # wc = wall_color if wall_color else WALL
     # W = f"{wc}█{RESET}"
     # W3 = f"{wc}███{RESET}"
+                entry: tuple, exit: tuple, path: list,
+                wall_color: str) -> None:
+    """Draw the grid using intersection-based approach"""
     W = f"{wall_color}█{RESET}"
     S = " "
 
-    # decode all cells once
+    # decode all cells once, save them in a 2D list
     cells = []
     for row in maze:
         cells.append([decode_cell(c) for c in row])
@@ -66,9 +71,14 @@ def create_grid(maze: list, width: int, height: int,
         if row_idx == 0 or row_idx == height or col_idx == 0 or col_idx == width:
             return W
 
+        
+        # the east wall of the cell above-left
         top = cells[row_idx - 1][col_idx - 1]["east"] if col_idx > 0 and row_idx > 0 else False
+        # the east wall of the cell below-left
         bottom = cells[row_idx][col_idx - 1]["east"] if col_idx > 0 and row_idx < height else False
+        # the south wall of the cell above-left
         left = cells[row_idx - 1][col_idx - 1]["south"] if col_idx > 0 and row_idx > 0 else False
+        # the south wall of the cell above-right
         right = cells[row_idx - 1][col_idx]["south"] if col_idx < width and row_idx > 0 else False
 
         if any([top, bottom, left, right]):
@@ -100,7 +110,7 @@ def create_grid(maze: list, width: int, height: int,
             elif (col_idx, row_idx) == exit:
                 mid_line += f"{left}{color} X {RESET}"
             elif path and (col_idx, row_idx) in path:
-                mid_line += f"{left}{color} * {RESET}"
+                mid_line += f"{left}{color} ● {RESET}"
             elif is_42:
                 mid_line += f"{left}{color}███{RESET}"
             else:

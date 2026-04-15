@@ -1,7 +1,4 @@
-# Functions for reading and processing the maze output file
-# First two lines:
-# 9515391539551795151151153
-# EBABAE812853C1412BA812812
+"""Read and process maze.txt file and convert it to display"""
 
 
 def read_maze_file(filename: str) -> tuple:

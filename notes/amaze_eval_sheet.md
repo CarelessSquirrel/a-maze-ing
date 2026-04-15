@@ -109,7 +109,7 @@ The maze generator module must meet the subject's expectations:
 - A perfect maze when `PERFECT=True` in the config file.
 - The same maze is reproducible when using an identical seed.
 
-> **note:** Jacobs gets these questions. Make sure there is no-3x3 rule
+> **note:** Jacob gets these questions. Make sure there is no-3x3 rule
 
 ### Reusable module
 The evaluator will:

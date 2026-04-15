@@ -29,3 +29,8 @@ Order of processing:
     - Let the user change wall colours
     - Let the user re-generate a new maze
     - Handle the interactive menu loop
+
+
+display.py outline (intersection based approach)
+
+

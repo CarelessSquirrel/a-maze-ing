@@ -8,6 +8,7 @@ from display import create_grid
 #   Change wall colours
 #   Quit
 
+
 def show_menu(maze: list,
               width: int,
               height: int,
