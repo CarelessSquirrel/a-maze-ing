@@ -33,9 +33,10 @@ def create_grid(maze: list, width: int, height: int,
                 entry: tuple, exit: tuple, path: list = None,
                 wall_color: str = '') -> None:
     """Draw the grid using intersection-based approach."""
-    wc = wall_color if wall_color else WALL
-    W = f"{wc}█{RESET}"
-    W3 = f"{wc}███{RESET}"
+    # wc = wall_color if wall_color else WALL
+    # W = f"{wc}█{RESET}"
+    # W3 = f"{wc}███{RESET}"
+    W = f"{wall_color}█{RESET}"
     S = " "
 
     # decode all cells once
@@ -80,7 +81,8 @@ def create_grid(maze: list, width: int, height: int,
         for col_idx in range(width):
             top_line += corner(row_idx, col_idx)
             if h_wall(row_idx, col_idx):
-                top_line += W3
+                # top_line += W3
+                top_line += f"{wall_color}███{RESET}"
             else:
                 top_line += S + S + S
         top_line += corner(row_idx, width)
@@ -110,126 +112,7 @@ def create_grid(maze: list, width: int, height: int,
     bottom = ""
     for col_idx in range(width):
         bottom += corner(height, col_idx)
-        bottom += W3
+        # bottom += W3
+        bottom += f"{wall_color}███{RESET}"
     bottom += corner(height, width)
     print(bottom)
-
-
-# V0
-# _____________________________________
-
-
-# def paint_maze(col_idx: int, row_idx: int, entry: tuple,
-#                exit: tuple, path: list, is_42: bool) -> str:
-#     """Return the appropriate color code for a cell."""
-#     if (col_idx, row_idx) == entry:
-#         return MAGENTA
-#     elif (col_idx, row_idx) == exit:
-#         return RED
-#     elif path and (col_idx, row_idx) in path:
-#         return CYAN
-#     elif is_42:
-#         return YELLOW
-#     return RESET
-
-
-# def create_grid(maze: list, width: int, height: int,
-#                 entry: tuple, exit: tuple, path: list = None) -> None:
-#     """Draw the grid with maze data using block symbols."""
-#     W = f"{WALL}█{RESET}"
-#     S = " "
-
-#     def get_corner(row_idx: int, col_idx: int) -> str:
-#         """Return corner character based on surrounding walls."""
-#           pass
-
-#     for row_idx, row in enumerate(maze):
-#         top_line = ""
-#         mid_line = ""
-
-#         for col_idx, cell in enumerate(row):
-#             current_cell = decode_cell(cell)
-#             is_42 = all(current_cell[w] for w in
-#                         ["north", "east", "south", "west"])
-#             color = paint_maze(col_idx, row_idx, entry, exit, path, is_42)
-
-#             # build top line
-#             corner = get_corner(row_idx, col_idx)
-#             if current_cell["north"]:
-#                 top_line += corner + f"{WALL}███{RESET}"
-#             else:
-#                 top_line += corner + S + S + S
-
-#             # build mid line
-#
-
-#         # final right wall
-#         last_cell = decode_cell(row[-1])
-#         corner_end = W if any([
-#             last_cell["north"],
-#             last_cell["east"],
-#             row_idx > 0 and decode_cell(maze[row_idx - 1][-1])["south"]
-#         ]) else S
-#         top_line += corner_end
-#         mid_line += W
-#         print(top_line)
-#         print(mid_line)
-
-#     # bottom line
-#     bottom = ""
-#     for col_idx, cell in enumerate(maze[-1]):
-#         current_cell = decode_cell(cell)
-#         corner = W if (current_cell["south"] or current_cell["west"]) else S
-#         bottom += corner + (f"{WALL}███{RESET}" if current_cell["south"] else S + S + S)
-#     bottom += W
-#     print(bottom)
-
-# V1
-# _____________________________________
-
-
-# def paint_maze(col_idx: int, row_idx: int, entry: tuple,
-#                exit: tuple, path: list, is_42: bool) -> str:
-#     """Return the appropriate color code for a cell."""
-#     if (col_idx, row_idx) == entry:
-#         return MAGENTA
-#     elif (col_idx, row_idx) == exit:
-#         return RED
-#     elif path and (col_idx, row_idx) in path:
-#         return CYAN
-#     elif is_42:
-#         return YELLOW
-#     return RESET
-
-
-# def create_grid(maze: list, width: int, height: int,
-#                 entry: tuple, exit: tuple, path: list = None) -> None:
-#     """Draw the grid with maze data using block symbols."""
-#     WALL_CHAR = f"{WALL}█{RESET}"
-#     SPACE = " "
-
-#     for row_idx, row in enumerate(maze):
-#         for cell in row:
-#             current_cell = decode_cell(cell)
-#             if current_cell["north"]:
-#                 print(f"{WALL}████{RESET}", end='')
-#             else:
-#                 print(f"{WALL}█{RESET}   ", end='')
-#         print(f"{WALL}█{RESET}")
-#         for col_idx, cell in enumerate(row):
-#             current_cell = decode_cell(cell)
-#             left = f"{WALL}█{RESET}" if current_cell["west"] else SPACE
-#             is_42 = all(current_cell[w] for w in ["north", "east", "south", "west"])
-#             color = paint_maze(col_idx, row_idx, entry, exit, path, is_42)
-#             if (col_idx, row_idx) == entry:
-#                 print(f"{left}{color} E {RESET}", end='')
-#             elif (col_idx, row_idx) == exit:
-#                 print(f"{left}{color} X {RESET}", end='')
-#             elif path and (col_idx, row_idx) in path:
-#                 print(f"{left}{color} * {RESET}", end='')
-#             elif is_42:
-#                 print(f"{left}{color}███{RESET}", end='')
-#             else:
-#                 print(f"{left}   ", end='')
-#         print(f"{WALL}█{RESET}")
-#     print(f"{WALL}" + "█" * (width * 4 + 1) + f"{RESET}")

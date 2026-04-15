@@ -2,6 +2,7 @@ from file_reader import read_maze_file
 from file_reader import decode_cell
 from file_reader import process_directions
 from display import create_grid
+from menu import show_menu
 
 # a place to test my functions
 
@@ -17,5 +18,7 @@ directions = ['S', 'W', 'S', 'E', 'S', 'W', 'S', 'E', 'S', 'W', 'S', 'S', 'S', '
 
 result = read_maze_file("temp_mock_maze.txt")
 maze = result[0]
-path = process_directions(directions, (1, 1))
-create_grid(maze, 25, 20, (1, 1), (19, 14), path)
+entry = result[1]
+exit = result[2]
+path = process_directions(directions, entry)
+show_menu(maze, 25, 20, entry, exit, path)
