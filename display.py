@@ -38,9 +38,6 @@ def create_grid(maze: list, width: int, height: int,
     # wc = wall_color if wall_color else WALL
     # W = f"{wc}█{RESET}"
     # W3 = f"{wc}███{RESET}"
-                entry: tuple, exit: tuple, path: list,
-                wall_color: str) -> None:
-    """Draw the grid using intersection-based approach"""
     W = f"{wall_color}█{RESET}"
     S = " "
 
