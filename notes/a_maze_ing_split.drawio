@@ -1,0 +1,268 @@
+<mxfile host="65bd71144e">
+    <diagram id="amazeingProcessFlow" name="Page-1">
+        <mxGraphModel dx="384" dy="259" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="2339" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="&lt;b&gt;&lt;font face=&quot;Verdana&quot;&gt;A-Maze-ing — Process Flow&lt;/font&gt;&lt;/b&gt;" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=22;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="90" width="400" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_left" value="&lt;b&gt;&lt;font style=&quot;color: rgb(77, 77, 77);&quot; face=&quot;Verdana&quot;&gt;What the user sees&lt;/font&gt;&lt;/b&gt;" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=15;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="280" width="360" height="28" as="geometry"/>
+                </mxCell>
+                <mxCell id="s1" value="&lt;b&gt;&lt;font face=&quot;Verdana&quot;&gt;① Start the program&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;user runs python3 a_maze_ing.py&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=2;dashed=1;fontSize=16;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="190" width="300" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="fn_main" value="&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;main()&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 9px; color: #9673a6;&quot;&gt;&lt;i&gt;a_maze_ing.py&lt;/i&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#4D4D4D;fillColor=#E1D5E7;opacity=60;" parent="1" vertex="1">
+                    <mxGeometry x="980" y="200" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_main" style="html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=oval;endFill=1;strokeColor=none;" parent="1" source="fn_main" target="s1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="s2" value="&lt;b&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 13px;&quot;&gt;② Read the settings&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;load width, height, entry, exit, output file, perfect flag&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="328" width="280" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="f_config" value="&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;config.txt&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 10px;&quot;&gt;KEY=VALUE settings&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="980" y="310" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="fn_parse" value="&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;parse_config()&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 9px; color: #d79b00;&quot;&gt;&lt;i&gt;config_parser.py&lt;/i&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#4D4D4D;fillColor=#FFE6CC;opacity=60;" parent="1" vertex="1">
+                    <mxGeometry x="980" y="371" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="arr_2_3" value="" style="endArrow=block;html=1;shape=flexArrow;strokeWidth=1;endFill=0;endSize=3;startSize=3;fillColor=#C7C7C7;strokeColor=none;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="780" y="406" as="sourcePoint"/>
+                        <mxPoint x="780" y="436" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="s3" value="&lt;b&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 13px;&quot;&gt;③ Generate the maze&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;carve passages with randomised DFS&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;stamp the &quot;42&quot; pattern, add loops&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="448" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="fn_generate" value="&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;generate_maze()&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 9px; color: #82b366;&quot;&gt;&lt;i&gt;mazegen/generator.py&lt;/i&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#4D4D4D;fillColor=#D5E8D4;opacity=60;" parent="1" vertex="1">
+                    <mxGeometry x="980" y="440" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="fn_place42" value="&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;_place_42()&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 10px;&quot;&gt;stamp the pixel pattern&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#4D4D4D;fillColor=#D5E8D4;opacity=60;" parent="1" vertex="1">
+                    <mxGeometry x="980" y="497" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="arr_3_4" value="" style="endArrow=block;html=1;shape=flexArrow;strokeWidth=1;endFill=0;endSize=3;startSize=3;fillColor=#C7C7C7;strokeColor=none;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="780" y="536" as="sourcePoint"/>
+                        <mxPoint x="780" y="566" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="s4" value="&lt;b&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 13px;&quot;&gt;④ Find the solution path&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;walk from entry to exit using BFS&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;record shortest route as N/E/S/W chars&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="578" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="fn_solve" value="&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;solve_maze()&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 9px; color: #82b366;&quot;&gt;&lt;i&gt;mazegen/solver.py&lt;/i&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#4D4D4D;fillColor=#D5E8D4;opacity=60;" parent="1" vertex="1">
+                    <mxGeometry x="980" y="598" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_solve" style="html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=oval;endFill=1;strokeColor=#787878;" parent="1" source="fn_solve" target="s4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arr_4_5" value="" style="endArrow=block;html=1;shape=flexArrow;strokeWidth=1;endFill=0;endSize=3;startSize=3;fillColor=#C7C7C7;strokeColor=none;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="780" y="666" as="sourcePoint"/>
+                        <mxPoint x="780" y="696" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="s5" value="&lt;b&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 13px;&quot;&gt;⑤ Save the maze to a file&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;convert each cell&#39;s walls to a hex char&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;write grid + entry/exit + path to disk&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="708" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="fn_encode" value="&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;encode_maze()&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 10px;&quot;&gt;ints → hex strings&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 9px; color: #82b366;&quot;&gt;&lt;i&gt;mazegen/writer.py&lt;/i&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#4D4D4D;fillColor=#D5E8D4;opacity=60;" parent="1" vertex="1">
+                    <mxGeometry x="980" y="723" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_encode" style="html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=oval;endFill=1;strokeColor=#787878;" parent="1" source="fn_encode" target="s5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arr_5_6" value="" style="endArrow=block;html=1;shape=flexArrow;strokeWidth=1;endFill=0;endSize=3;startSize=3;fillColor=#C7C7C7;strokeColor=none;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="780" y="796" as="sourcePoint"/>
+                        <mxPoint x="780" y="826" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="s6" value="&lt;b&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 13px;&quot;&gt;⑥ Read the maze file&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;open output file, parse hex rows,&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;extract entry, exit, path string&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="838" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="fn_readfile" value="&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;read_maze_file()&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 9px; color: #9673a6;&quot;&gt;&lt;i&gt;file_reader.py&lt;/i&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#4D4D4D;fillColor=#E1D5E7;opacity=60;" parent="1" vertex="1">
+                    <mxGeometry x="980" y="858" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_readfile" style="html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=oval;endFill=1;strokeColor=#787878;" parent="1" source="fn_readfile" target="s6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arr_6_7" value="" style="endArrow=block;html=1;shape=flexArrow;strokeWidth=1;endFill=0;endSize=3;startSize=3;fillColor=#C7C7C7;strokeColor=none;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="780" y="926" as="sourcePoint"/>
+                        <mxPoint x="780" y="956" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="s7" value="&lt;b&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 13px;&quot;&gt;⑦ Decode hex into walls&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;turn each hex digit into a 4-bit mask:&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;which walls are on N, E, S, W&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="968" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="fn_decode" value="&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;decode_cell()&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 10px;&quot;&gt;hex char → wall dict&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 9px; color: #9673a6;&quot;&gt;&lt;i&gt;file_reader.py&lt;/i&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#4D4D4D;fillColor=#E1D5E7;opacity=60;" parent="1" vertex="1">
+                    <mxGeometry x="980" y="983" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_decode" style="html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=oval;endFill=1;strokeColor=#787878;" parent="1" source="fn_decode" target="s7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="arr_7_8" value="" style="endArrow=block;html=1;shape=flexArrow;strokeWidth=1;endFill=0;endSize=3;startSize=3;fillColor=#C7C7C7;strokeColor=none;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="780" y="1056" as="sourcePoint"/>
+                        <mxPoint x="780" y="1086" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="s8" value="&lt;b&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 13px;&quot;&gt;⑧ Draw the maze in the terminal&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;print walls with ASCII blocks,&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;colour entry, exit, path and &quot;42&quot;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="1098" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="fn_creategrid" value="&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;create_grid()&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 9px; color: #9673a6;&quot;&gt;&lt;i&gt;display.py&lt;/i&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#4D4D4D;fillColor=#E1D5E7;opacity=60;" parent="1" vertex="1">
+                    <mxGeometry x="980" y="1090" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="fn_paint" value="&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;paint_maze()&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 10px;&quot;&gt;ANSI colour per cell&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 9px; color: #9673a6;&quot;&gt;&lt;i&gt;display.py&lt;/i&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#4D4D4D;fillColor=#E1D5E7;opacity=60;" parent="1" vertex="1">
+                    <mxGeometry x="980" y="1143" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="arr_8_9" value="" style="endArrow=block;html=1;shape=flexArrow;strokeWidth=1;endFill=0;endSize=3;startSize=3;fillColor=#C7C7C7;strokeColor=none;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="780" y="1186" as="sourcePoint"/>
+                        <mxPoint x="780" y="1216" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="s9" value="&lt;b&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 13px;&quot;&gt;⑨ Show menu &amp;amp; wait for input&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;print menu, read number 1–4&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="1228" width="280" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="fn_showmenu" value="&lt;div&gt;&lt;font face=&quot;Verdana&quot;&gt;&lt;b&gt;show_menu()&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 9px; color: #6c8ebf;&quot;&gt;&lt;i&gt;menu.py&lt;/i&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#4D4D4D;fillColor=#DAE8FC;opacity=60;" parent="1" vertex="1">
+                    <mxGeometry x="980" y="1243" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_showmenu" style="html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=oval;endFill=1;strokeColor=#787878;" parent="1" source="fn_showmenu" target="s9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="terminal_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1a1a1a;strokeColor=#444;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="330" width="460" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="terminal_content" value="&lt;font face=&quot;Courier New&quot; style=&quot;font-size: 11px; color: rgb(238, 238, 238);&quot;&gt;$ python3 a_maze_ing.py config.txt&lt;br&gt;&lt;br&gt;[maze renders here]&lt;br&gt;&lt;br&gt;┌─ A-Maze-ing ──────────────────────┐&lt;br&gt;│&amp;nbsp; 1. Re-generate maze&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; │&lt;/font&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size: 11px; color: rgb(238, 238, 238);&quot;&gt;│&amp;nbsp; 2. Toggle solution path&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; │&lt;br&gt;│&amp;nbsp; 3. Change wall colour&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; │&lt;br&gt;│&amp;nbsp; 4. Quit&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; │&lt;br&gt;└───────────────────────────────────┘&lt;/font&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="85" y="340" width="430" height="175" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_user_picks" value="&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 11px; color: #6c8ebf;&quot;&gt;&lt;b&gt;user types a number...&lt;/b&gt;&lt;/font&gt;" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="550" width="280" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="br_1" value="&lt;b&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 13px;&quot;&gt;1&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 10px;&quot;&gt;Re-generate maze&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="620" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_br1" value="&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 9px; color: #6c8ebf;&quot;&gt;&lt;i&gt;new maze generated,&lt;br&gt;redraw from step ③&lt;/i&gt;&lt;/font&gt;" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="690" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="br_2" value="&lt;b&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 13px;&quot;&gt;2&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 10px;&quot;&gt;Toggle path&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="180" y="620" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_br2" value="&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 9px; color: #6c8ebf;&quot;&gt;&lt;i&gt;show_path flips,&lt;br&gt;redraw from step ⑧&lt;/i&gt;&lt;/font&gt;" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="180" y="690" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="br_3" value="&lt;b&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 13px;&quot;&gt;3&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 10px;&quot;&gt;Change colour&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="620" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_br3" value="&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 9px; color: #6c8ebf;&quot;&gt;&lt;i&gt;color_index cycles,&lt;br&gt;redraw from step ⑧&lt;/i&gt;&lt;/font&gt;" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="690" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="br_4" value="&lt;b&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 13px;&quot;&gt;4&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 10px;&quot;&gt;Quit&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="620" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_br4" value="&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 9px; color: #9673a6;&quot;&gt;&lt;i&gt;loop breaks,&lt;br&gt;program ends&lt;/i&gt;&lt;/font&gt;" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="690" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="&lt;b&gt;&lt;font style=&quot;color: rgb(77, 77, 77);&quot; face=&quot;Verdana&quot;&gt;What happens in the code&lt;/font&gt;&lt;/b&gt;" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=15;" vertex="1" parent="1">
+                    <mxGeometry x="600" y="280" width="360" height="28" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=oval;html=1;curved=0;rounded=1;endSize=8;startSize=8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#787878;endFill=1;" edge="1" parent="1" source="br_2" target="s8">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="296.25" y="795.9999999999995" as="sourcePoint"/>
+                        <mxPoint x="610" y="1128" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="300" y="790"/>
+                            <mxPoint x="300" y="790"/>
+                            <mxPoint x="570" y="950"/>
+                            <mxPoint x="270" y="790"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="16" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=none;html=1;curved=0;rounded=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#787878;endFill=0;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="320" y="650" as="sourcePoint"/>
+                        <mxPoint x="300" y="900" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="300" y="790"/>
+                            <mxPoint x="300" y="790"/>
+                            <mxPoint x="30" y="950"/>
+                            <mxPoint x="330" y="790"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="17" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=none;html=1;curved=0;rounded=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#787878;endFill=0;" edge="1" parent="1" source="br_1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="180" y="652" as="sourcePoint"/>
+                        <mxPoint x="600" y="590" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="160" y="792"/>
+                            <mxPoint x="160" y="792"/>
+                            <mxPoint x="550" y="590"/>
+                            <mxPoint x="560" y="590"/>
+                            <mxPoint x="600" y="590"/>
+                            <mxPoint x="-110" y="952"/>
+                            <mxPoint x="190" y="792"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="18" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=none;html=1;curved=0;rounded=1;endSize=8;startSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#787878;endFill=0;startArrow=oval;startFill=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="640" y="480" as="sourcePoint"/>
+                        <mxPoint x="440" y="590" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="620" y="620"/>
+                            <mxPoint x="620" y="620"/>
+                            <mxPoint x="350" y="780"/>
+                            <mxPoint x="650" y="620"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="20" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=none;html=1;curved=0;rounded=1;endSize=8;startSize=8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=oval;startFill=1;endFill=0;strokeColor=#787878;" edge="1" parent="1" target="f_config">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="920" y="363" as="sourcePoint"/>
+                        <mxPoint x="970" y="313" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="21" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=none;html=1;curved=0;rounded=1;endSize=8;startSize=8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=none;startFill=0;endFill=0;strokeColor=#787878;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="980" y="391" as="sourcePoint"/>
+                        <mxPoint x="920" y="363" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="22" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=none;html=1;curved=0;rounded=1;endSize=8;startSize=8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=oval;startFill=1;endFill=0;strokeColor=#787878;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="920" y="488" as="sourcePoint"/>
+                        <mxPoint x="980" y="460" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="23" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=none;html=1;curved=0;rounded=1;endSize=8;startSize=8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=none;startFill=0;endFill=0;strokeColor=#787878;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="980" y="516" as="sourcePoint"/>
+                        <mxPoint x="920" y="488" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="24" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=none;html=1;curved=0;rounded=1;endSize=8;startSize=8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=oval;startFill=1;endFill=0;strokeColor=#787878;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="920" y="1138" as="sourcePoint"/>
+                        <mxPoint x="980" y="1110" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="25" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=none;html=1;curved=0;rounded=1;endSize=8;startSize=8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=none;startFill=0;endFill=0;strokeColor=#787878;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="980" y="1166" as="sourcePoint"/>
+                        <mxPoint x="920" y="1138" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="26" style="html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;endArrow=oval;endFill=1;strokeColor=#787878;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="980" y="219.85" as="sourcePoint"/>
+                        <mxPoint x="720" y="220" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
