@@ -65,18 +65,22 @@ def create_grid(maze: list, width: int, height: int,
     def corner(row_idx: int, col_idx: int) -> str:
         """Corner at intersection (col_idx, row_idx)"""
         # always draw corner on borders
-        if row_idx == 0 or row_idx == height or col_idx == 0 or col_idx == width:
+        if (row_idx == 0 or row_idx == height or col_idx == 0
+                or col_idx == width):
             return W
 
-        
         # the east wall of the cell above-left
-        top = cells[row_idx - 1][col_idx - 1]["east"] if col_idx > 0 and row_idx > 0 else False
+        top = (cells[row_idx - 1][col_idx - 1]["east"]
+               if col_idx > 0 and row_idx > 0 else False)
         # the east wall of the cell below-left
-        bottom = cells[row_idx][col_idx - 1]["east"] if col_idx > 0 and row_idx < height else False
+        bottom = (cells[row_idx][col_idx - 1]["east"]
+                  if col_idx > 0 and row_idx < height else False)
         # the south wall of the cell above-left
-        left = cells[row_idx - 1][col_idx - 1]["south"] if col_idx > 0 and row_idx > 0 else False
+        left = (cells[row_idx - 1][col_idx - 1]["south"]
+                if col_idx > 0 and row_idx > 0 else False)
         # the south wall of the cell above-right
-        right = cells[row_idx - 1][col_idx]["south"] if col_idx < width and row_idx > 0 else False
+        right = (cells[row_idx - 1][col_idx]["south"]
+                 if col_idx < width and row_idx > 0 else False)
 
         if any([top, bottom, left, right]):
             return W

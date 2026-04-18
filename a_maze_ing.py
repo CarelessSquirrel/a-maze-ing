@@ -4,8 +4,7 @@ import sys
 from typing import Any, Dict
 
 from config_parser import parse_config
-from file_reader import process_directions
-from mazegen import encode_maze, generate_maze, solve_maze, write_maze_file
+from mazegen import generate_maze, solve_maze, write_maze_file
 from menu import run_menu
 
 
@@ -29,7 +28,7 @@ def main() -> None:
 
 
 def _new_maze(config: Dict[str, Any]):  # type: ignore[return]
-    """Generate a fresh maze, solve it, persist it, and return (cells, has_42)."""
+    """Generate a fresh maze, solve it, persist it, and return(cells,has_42)"""
     cells, has_42 = generate_maze(
         config['WIDTH'],
         config['HEIGHT'],

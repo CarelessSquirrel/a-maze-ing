@@ -91,7 +91,7 @@ def _render(
     show_path: bool,
     wall_color: str,
 ) -> None:
-    """Convert cells to the hex-string grid Agnes's display expects, then draw."""
+    """Convert cells to the hex-string grid display expects, then draw."""
     hex_grid = encode_maze(cells)
 
     coord_path: List[Tuple[int, int]] = []

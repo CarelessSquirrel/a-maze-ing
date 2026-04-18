@@ -7,7 +7,7 @@ from typing import Any, Dict
 _REQUIRED_KEYS = {'WIDTH', 'HEIGHT', 'ENTRY', 'EXIT', 'OUTPUT_FILE', 'PERFECT'}
 
 # Accepted string values that map to boolean True / False
-_TRUE_VALUES  = {'true',  '1', 'yes'}
+_TRUE_VALUES = {'true',  '1', 'yes'}
 _FALSE_VALUES = {'false', '0', 'no'}
 
 
@@ -28,7 +28,7 @@ def parse_config(filename: str) -> Dict[str, Any]:
         }
 
     Raises ValueError with a descriptive message for every kind of bad input
-    so that the caller can print the error instead of letting the program crash.
+    so that the caller can print the error instead of letting the program crash
     """
     raw: Dict[str, str] = {}
 
@@ -39,7 +39,8 @@ def parse_config(filename: str) -> Dict[str, Any]:
                 continue
             if '=' not in line:
                 raise ValueError(
-                    f"Line {line_num}: expected KEY=VALUE format, got: {line!r}"
+                    f"Line {line_num}: expected KEY=VALUE format, got:"
+                    f"{line!r}"
                 )
             key, _, value = line.partition('=')
             raw[key.strip().upper()] = value.strip()

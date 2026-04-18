@@ -4,11 +4,11 @@ import random
 from typing import List, Optional, Set, Tuple
 
 # Wall bit masks — each cell is a 4-bit integer stored in a 2D grid.
-# A set bit means the wall EXISTS (is closed).  Clearing a bit carves a passage.
+# A set bit means the wall EXISTS (is closed).  Clearing a bit carves a passage
 NORTH: int = 1   # bit 0
-EAST: int  = 2   # bit 1
+EAST: int = 2   # bit 1
 SOUTH: int = 4   # bit 2
-WEST: int  = 8   # bit 3
+WEST: int = 8   # bit 3
 
 # (dx, dy, wall on current cell, opposite wall on neighbour)
 _MOVES: List[Tuple[int, int, int, int]] = [
@@ -29,7 +29,7 @@ _PATTERN_42: List[List[int]] = [
 ]
 _PAT_W: int = 7
 _PAT_H: int = 5
-# Minimum maze dimensions required to embed the pattern with 2-cell padding on each side
+# Min maze dim required to embed the pattern with 2-cell padding on each side
 _MIN_W: int = _PAT_W + 4
 _MIN_H: int = _PAT_H + 4
 
@@ -160,7 +160,7 @@ def _is_open_zone(cells: List[List[int]], gx: int, gy: int) -> bool:
 def has_open_zone(cells: List[List[int]], width: int, height: int) -> bool:
     """
     Scan the whole maze for 3x3 open zones.
-    Returns True if at least one exists (should never happen in a perfect maze).
+    Returns True if at least one exists (should never happen in a perfect maze)
     Public so a_maze_ing.py can use it for a debug assertion if needed.
     """
     for gy in range(height - 2):
@@ -187,9 +187,11 @@ def _add_loops(
         for x in range(width):
             if (x, y) in pattern_cells:
                 continue
-            if x + 1 < width and (x + 1, y) not in pattern_cells and cells[y][x] & EAST:
+            if (x + 1 < width and (x + 1, y) not in pattern_cells
+                    and cells[y][x] & EAST):
                 candidates.append((x, y, x + 1, y, EAST, WEST))
-            if y + 1 < height and (x, y + 1) not in pattern_cells and cells[y][x] & SOUTH:
+            if (y + 1 < height and (x, y + 1) not in pattern_cells
+                    and cells[y][x] & SOUTH):
                 candidates.append((x, y, x, y + 1, SOUTH, NORTH))
 
     random.shuffle(candidates)
@@ -204,8 +206,10 @@ def _add_loops(
         cells[ny][nx] &= ~opp
         # Check every 3x3 grid that overlaps both cells
         violation = False
-        for gy in range(max(0, min(y, ny) - 2), min(height - 2, max(y, ny) + 1)):
-            for gx in range(max(0, min(x, nx) - 2), min(width - 2, max(x, nx) + 1)):
+        for gy in range(max(0, min(y, ny) - 2), min(height - 2,
+                                                    max(y, ny) + 1)):
+            for gx in range(max(0, min(x, nx) - 2), min(width - 2,
+                                                        max(x, nx) + 1)):
                 if _is_open_zone(cells, gx, gy):
                     violation = True
                     break

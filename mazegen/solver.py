@@ -5,9 +5,9 @@ from typing import Dict, List, Optional, Tuple
 
 # Mirror the same bit masks used by generator.py
 NORTH: int = 1
-EAST: int  = 2
+EAST: int = 2
 SOUTH: int = 4
-WEST: int  = 8
+WEST: int = 8
 
 # direction name -> (dx, dy, wall bit that blocks movement in that direction)
 _MOVES: Dict[str, Tuple[int, int, int]] = {
@@ -47,7 +47,8 @@ def solve_maze(
                 # wall is present — cannot move in this direction
                 continue
             nx, ny = x + dx, y + dy
-            if 0 <= nx < width and 0 <= ny < height and (nx, ny) not in visited:
+            if (0 <= nx < width and 0 <= ny < height and (nx, ny)
+                    not in visited):
                 visited.add((nx, ny))
                 queue.append(((nx, ny), path + [dir_name]))
 
