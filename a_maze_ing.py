@@ -6,7 +6,7 @@ from typing import Any, Dict
 from config_parser import parse_config
 from file_reader import process_directions
 from mazegen import encode_maze, generate_maze, solve_maze, write_maze_file
-from jacobs_menu import run_menu
+from menu import run_menu
 
 
 def main() -> None:
