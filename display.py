@@ -1,4 +1,5 @@
 from file_reader import decode_cell
+from typing import Optional
 
 # takes the 2D grid of cells and draws them visually
 # in the terminal using ASCII characters
@@ -18,7 +19,7 @@ BLUE = '\033[94m'
 
 
 def paint_maze(col_idx: int, row_idx: int, entry: tuple,
-               exit: tuple, path: list, is_42: bool) -> str:
+               exit: tuple, path: Optional[list], is_42: bool) -> str:
     """Return the appropriate color code for a cell"""
     if (col_idx, row_idx) == entry:
         return MAGENTA
@@ -32,7 +33,7 @@ def paint_maze(col_idx: int, row_idx: int, entry: tuple,
 
 
 def create_grid(maze: list, width: int, height: int,
-                entry: tuple, exit: tuple, path: list = None,
+                entry: tuple, exit: tuple, path: Optional[list] = None,
                 wall_color: str = '') -> None:
     """Draw the grid using intersection-based approach."""
     # wc = wall_color if wall_color else WALL

@@ -11,8 +11,8 @@ def read_maze_file(filename: str) -> tuple:
     with open(filename, 'r') as file:
         lines = file.readlines()
     maze = []
-    entry = []
-    exit = []
+    entry: tuple[int, int] = (0, 0)
+    exit: tuple[int, int] = (0, 0)
     path = []
     empty_line_index = lines.index('\n')
     for line in lines:
@@ -22,9 +22,11 @@ def read_maze_file(filename: str) -> tuple:
             break
 
     coordinates_entry = lines[empty_line_index + 1].split(",")
-    entry = tuple(int(x) for x in coordinates_entry)
+    x, y = tuple(int(x) for x in coordinates_entry)
+    entry = (x, y)
     coordinates_exit = lines[empty_line_index + 2].split(",")
-    exit = tuple(int(x) for x in coordinates_exit)
+    x, y = tuple(int(x) for x in coordinates_exit)
+    exit = (x, y)
     path = list(lines[empty_line_index + 3].strip())
 
     return (maze, entry, exit, path)
