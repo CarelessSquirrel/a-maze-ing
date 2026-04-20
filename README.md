@@ -22,11 +22,17 @@ A-Maze-ing is a Python maze generator and interactive terminal viewer. Given a c
 git clone [your repo URL]
 cd [repo folder]
 
-# Optional: install the reusable mazegen package
-pip install mazegen-1.0.0-py3-none-any.whl
+# Install dependencies and the mazegen package
+make install
 ```
 
 ### Running the program
+
+```bash
+make run
+```
+
+Or directly:
 
 ```bash
 python3 a_maze_ing.py config.txt
@@ -34,12 +40,52 @@ python3 a_maze_ing.py config.txt
 
 If no config file is specified, `config.txt` in the current directory is used by default.
 
+### Debug mode
+
+```bash
+make debug
+```
+
+Launches the program with Python's built-in debugger (pdb), pausing at the first line. Useful commands once inside pdb:
+
+| Command | Description |
+|---|---|
+| `n` | Execute the next line |
+| `c` | Continue running until the next breakpoint or end |
+| `l` | Show the current code around where you are |
+| `p <variable>` | Print the value of a variable |
+| `b <line>` | Set a breakpoint at a line number |
+| `q` | Quit the debugger |
+
 ### Linting
 
 ```bash
-flake8 .
-mypy . --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
+make lint
 ```
+
+Runs flake8 for style checking and mypy for static type checking.
+
+```bash
+make lint-strict
+```
+
+Same as above but with mypy's strict mode enabled.
+
+### Cleaning up
+
+```bash
+make clean
+```
+
+Removes `__pycache__`, `.mypy_cache`, build artifacts and other temporary files.
+
+### Validating the maze output
+
+```bash
+python3 output_validator.py maze.txt
+```
+
+If no errors are printed, the maze encoding is valid.
 
 ---
 
@@ -122,12 +168,26 @@ path = solve_maze(cells, entry=(0, 0), exit=(19, 14), width=20, height=15)
 
 A bit set to `1` means the wall is closed. Example: `9` (binary `1001`) means north and west walls are closed.
 
-### Rebuilding the package
+### Rebuilding and testing the package
 
 ```bash
+# Step 1 — create a virtualenv and build the package
+python3 -m venv build_env
+source build_env/bin/activate
+pip install build
 python3 -m build
-# Output: dist/mazegen-1.0.0-py3-none-any.whl
+# output: dist/mazegen-1.0.0-py3-none-any.whl
+
+# Step 2 — in a fresh virtualenv, install and test it
+deactivate
+python3 -m venv test_env
+source test_env/bin/activate
+pip install dist/mazegen-1.0.0-py3-none-any.whl
+python3 a_maze_ing.py config.txt
+deactivate
 ```
+
+If the program runs correctly without import errors, the package is working.
 
 ---
 
@@ -140,12 +200,14 @@ python3 -m build
 - [Python type hints — mypy documentation](https://mypy.readthedocs.io/en/stable/)
 - [ANSI escape codes — Wikipedia](https://en.wikipedia.org/wiki/ANSI_escape_code)
 - [PEP 257 — Docstring conventions](https://peps.python.org/pep-0257/)
+- [Python docs - reading and writing files (for file_reader)](https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files)
+- [Mypy documentation](https://mypy.readthedocs.io/en/stable/)
 
 ### AI usage
 
 Claude (Anthropic) was used throughout this project as a learning and debugging tool:
 - Conceptual explanations of bitwise operations, intersection-based rendering, and maze algorithms
-- Socratic guidance through building `display.py`, and  step by step (more files?)
+- Socratic guidance through building the display files, and step by step explanation of new concepts
 - Debugging mypy errors and flake8 norm issues
 - Generating the process flow diagram for the README
 - All code was understood, reviewed, and written by the team members

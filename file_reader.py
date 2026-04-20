@@ -54,7 +54,7 @@ def decode_cell(cell: str) -> dict:
 
 def process_directions(path: list, entry: tuple) -> list:
     """
-    take the direction string and put coordinates from it
+    Take the direction string and put coordinates from it
     into a list, they will represent the solution path
     """
     current_pos = entry
