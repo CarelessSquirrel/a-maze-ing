@@ -68,6 +68,14 @@ def generate_maze(
     has_42 = _place_42(cells, width, height, pattern_cells)
     if not has_42:
         print("Maze is too small to display the '42' pattern.")
+    if entry in pattern_cells or exit_ in pattern_cells:
+        raise ValueError(
+            f"entry {entry} or {exit_} overlaps the '42' pattern"
+        )
+    if entry == exit_:
+        raise ValueError(
+            f"entry {entry} and exit {exit_} can not be on the same coordinates"
+        )
 
     # ------------------------------------------------------------------
     # Iterative DFS (randomised Recursive Backtracker)
