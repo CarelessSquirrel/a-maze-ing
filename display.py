@@ -35,9 +35,6 @@ def create_grid(maze: list, width: int, height: int,
                 entry: tuple, exit: tuple, path: Optional[list] = None,
                 wall_color: str = '') -> None:
     """Draw the grid using intersection-based approach."""
-    # wc = wall_color if wall_color else WALL
-    # W = f"{wc}█{RESET}"
-    # W3 = f"{wc}███{RESET}"
     W = f"{wall_color}█{RESET}"
     S = " "
 
@@ -90,7 +87,6 @@ def create_grid(maze: list, width: int, height: int,
         for col_idx in range(width):
             top_line += corner(row_idx, col_idx)
             if h_wall(row_idx, col_idx):
-                # top_line += W3
                 top_line += f"{wall_color}███{RESET}"
             else:
                 top_line += S + S + S
@@ -119,7 +115,6 @@ def create_grid(maze: list, width: int, height: int,
     bottom = ""
     for col_idx in range(width):
         bottom += corner(height, col_idx)
-        # bottom += W3
         bottom += f"{wall_color}███{RESET}"
     bottom += corner(height, width)
     print(bottom)
