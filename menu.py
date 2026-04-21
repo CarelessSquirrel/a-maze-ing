@@ -33,7 +33,7 @@ def run_menu(
     """
     cells = initial_cells
     show_path: bool = False
-    wall_color: str = ''   # empty string = default terminal colour
+    wall_color: str = ''
 
     while True:
         _clear()
@@ -140,7 +140,7 @@ def _pick_color() -> str:
             return _WALL_COLORS[chosen][1]
     except ValueError:
         pass
-    return ''   # fall back to default on bad input
+    return ''
 
 
 def _clear() -> None:

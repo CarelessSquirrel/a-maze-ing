@@ -1,12 +1,11 @@
 from file_reader import decode_cell
 from typing import Optional
 
-# takes the 2D grid of cells and draws them visually
-# in the terminal using ASCII characters
-# adds color to separate parts (like 42, entry & exit, path)
-
-# V0-1
-# _____________________________________
+"""
+Takes the 2D grid of cells and draws them visually
+in the terminal using ASCII characters.
+Adds color to separate parts (like 42, entry & exit, path)
+"""
 
 # module-level constants (or global constants)
 RESET = '\033[0m'
@@ -50,22 +49,21 @@ def create_grid(maze: list, width: int, height: int,
     def h_wall(row_idx: int, col_idx: int) -> bool:
         """Is there a horizontal wall on top of cell (col_idx, row_idx)?"""
         if row_idx >= height:
-            return True  # bottom border
+            return True
         if row_idx == 0:
-            return True  # top border
+            return True
         return cells[row_idx][col_idx]["north"]
 
     def v_wall(row_idx: int, col_idx: int) -> bool:
         """Is there a vertical wall on left of cell (col_idx, row_idx)?"""
         if col_idx >= width:
-            return True  # right border
+            return True
         if col_idx == 0:
-            return True  # left border
+            return True
         return cells[row_idx][col_idx]["west"]
 
     def corner(row_idx: int, col_idx: int) -> str:
         """Corner at intersection (col_idx, row_idx)"""
-        # always draw corner on borders
         if (row_idx == 0 or row_idx == height or col_idx == 0
                 or col_idx == width):
             return W
@@ -88,7 +86,6 @@ def create_grid(maze: list, width: int, height: int,
         return S
 
     for row_idx in range(height):
-        # top line for this row
         top_line = ""
         for col_idx in range(width):
             top_line += corner(row_idx, col_idx)
@@ -100,7 +97,6 @@ def create_grid(maze: list, width: int, height: int,
         top_line += corner(row_idx, width)
         print(top_line)
 
-        # middle line for this row
         mid_line = ""
         for col_idx in range(width):
             left = W if v_wall(row_idx, col_idx) else S
@@ -120,7 +116,6 @@ def create_grid(maze: list, width: int, height: int,
         mid_line += W
         print(mid_line)
 
-    # final bottom line
     bottom = ""
     for col_idx in range(width):
         bottom += corner(height, col_idx)
