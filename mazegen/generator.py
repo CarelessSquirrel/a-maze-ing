@@ -22,8 +22,8 @@ _MOVES: List[Tuple[int, int, int, int]] = [
 # Layout: "4" (3 wide) + gap (1 wide) + "2" (3 wide) = 7 columns, 5 rows
 _PATTERN_42: List[List[int]] = [
     [1, 0, 1,  0,  1, 1, 1],
-    [1, 1, 1,  0,  0, 0, 1],
-    [0, 0, 1,  0,  1, 1, 1],
+    [1, 0, 1,  0,  0, 0, 1],
+    [1, 1, 1,  0,  1, 1, 1],
     [0, 0, 1,  0,  1, 0, 0],
     [0, 0, 1,  0,  1, 1, 1],
 ]
