@@ -106,7 +106,18 @@ def parse_config(filename: str) -> Dict[str, Any]:
     result['OUTPUT_FILE'] = raw['OUTPUT_FILE']
 
     # ------------------------------------------------------------------ #
-    # 6. Cross-field validation: entry and exit must lie inside the maze  #
+    # 6. SEED — optional integer                                          #
+    # ------------------------------------------------------------------ #
+    if 'SEED' in raw:
+        try:
+            result['SEED'] = int(raw['SEED'])
+        except ValueError:
+            raise ValueError(f"SEED must be an integer, got: {raw['SEED']!r}")
+    else:
+        result['SEED'] = None
+
+    # ------------------------------------------------------------------ #
+    # 7. Cross-field validation: entry and exit must lie inside the maze  #
     # ------------------------------------------------------------------ #
     width, height = result['WIDTH'], result['HEIGHT']
     for key in ('ENTRY', 'EXIT'):

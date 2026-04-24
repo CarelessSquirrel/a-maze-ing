@@ -35,6 +35,7 @@ def _new_maze(config: Dict[str, Any]):  # type: ignore[return]
         config['ENTRY'],
         config['EXIT'],
         perfect=config['PERFECT'],
+        seed=config.get('SEED'),
     )
 
     path = solve_maze(
